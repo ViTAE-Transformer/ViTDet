@@ -9,16 +9,19 @@
 
 This branch contains the **unofficial** pytorch implementation of <a href="https://arxiv.org/abs/2203.16527">Exploring Plain Vision Transformer Backbones for Object Detection</a>. Thanks for their wonderful work!
 
-## Results from this repo
+## Results from this repo on COCO
 
 The models are trained on 4 A100 machines with 2 images per gpu, which makes a batch size of 64 during training.
 
-| Model | Pretrain | FrameWork | Detection | Segmentation | config | log | weight |
-| :----: | :----:| :----: | :----: | :----: | :----: | :----: | :----: | 
-| ViT-Base | IN1K on TPU | Mask RCNN | 51.1 | 45.5 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-TPU.log.json) | |
-| ViT-Base | IN1K on GPU | Mask RCNN |      |      | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | | |
+| Model | Pretrain | Machine | FrameWork | Detection | Segmentation | config | log | weight |
+| :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | 
+| ViT-Base | IN1K+MAE | TPU | Mask RCNN | 51.1 | 45.5 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-TPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQuegyG-Z3FH2LDP?e=9ij98g) |
+| ViT-Base | IN1K+MAE | GPU | Mask RCNN | 50.9 | 45.2 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQyB0R1bn1h7HzSz?e=IczYEw) |
+| ViTAE-Base | IN1K+MAE | GPU | Mask RCNN | 51.2 | 45.6 | [config](configs/ViTDet/ViTDet-ViTAE-Base-100e.py) | [log](logs/ViTAE-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ0mNFX8iGvMAGmI) |
 
 ## Updates
+
+> [2022-04-17] Release the pretrained weights and logs for ViT-B and ViTAE-B on MS COCO. The models are totally trained with PyTorch on GPU.
 
 > [2022-04-16] Release the initial unofficial implementation of ViTDet with ViT-Base model! It obtains 51.1 mAP and 45.5 mAP on detection and segmentation, respectively. The weights and logs will be uploaded soon. 
 
