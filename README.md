@@ -13,7 +13,7 @@ This branch contains the **unofficial** pytorch implementation of <a href="https
 
 The models are trained on 4 A100 machines with 2 images per gpu, which makes a batch size of 64 during training.
 
-| Model | Pretrain | Machine | FrameWork | Detection | Segmentation | config | log | weight |
+| Model | Pretrain | Machine | FrameWork | Box mAP | Mask mAP | config | log | weight |
 | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | 
 | ViT-Base | IN1K+MAE | TPU | Mask RCNN | 51.1 | 45.5 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-TPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQuegyG-Z3FH2LDP?e=9ij98g) |
 | ViT-Base | IN1K+MAE | GPU | Mask RCNN | 50.9 | 45.2 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQyB0R1bn1h7HzSz?e=IczYEw) |
