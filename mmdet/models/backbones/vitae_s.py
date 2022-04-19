@@ -125,7 +125,6 @@ class ViTAE_S(nn.Module):
                 drop_path_rate=0., 
                 norm_layer=partial(nn.LayerNorm, eps=1e-6), 
                 window_size=(14, 14), 
-                relative_pos=False, 
                 out_indices=(0, 1, 2, 3), # no need to use here
                 frozen_stages=-1,
                 use_checkpoint=False,
