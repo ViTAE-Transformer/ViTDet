@@ -18,7 +18,7 @@ The models are trained on 4 A100 machines with 2 images per gpu, which makes a b
 | ViT-Base | IN1K+MAE | TPU | Mask RCNN | 51.1 | 45.5 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-TPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQuegyG-Z3FH2LDP?e=9ij98g) |
 | ViT-Base | IN1K+MAE | GPU | Mask RCNN | 51.1 | 45.4 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgRA7Y9s2rA5NC4wn?e=QfpKJf) |
 | ViTAE-Base | IN1K+MAE | GPU | Mask RCNN | 51.6 | 45.8 | [config](configs/ViTDet/ViTDet-ViTAE-Base-100e.py) | [log](logs/ViTAE-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ--Ez4mzEnO-G5Y?e=ACfLxC) |
-| ViTAE-Small | IN1K+Sup | GPU | Mask RCNN | 45.6 | 40.1 | | [log](logs/ViTAE-S-GPU.log.json) | [weight](https://1drv.ms/u/s!AimBgYV7JjTlgQ7PorGY53K6gIGd?e=lw81U5) |
+| ViTAE-Small | IN1K+Sup | GPU | Mask RCNN | 45.6 | 40.1 | | [log](logs/ViTAE-S-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ7PorGY53K6gIGd?e=lw81U5) |
 
 ## Updates
 
