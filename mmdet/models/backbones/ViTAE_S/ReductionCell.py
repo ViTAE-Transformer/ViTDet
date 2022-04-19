@@ -16,7 +16,7 @@ class PRM(nn.Module):
         self.downsample_ratio = downsample_ratio
         self.kernel_size = kernel_size
         self.stride = downsample_ratio
-        self.patch_shape = (img_size[0] // downsample_ratio, img_size[1] // downsample_ratio)
+        self.patch_shape = (self.img_size[0] // downsample_ratio, self.img_size[1] // downsample_ratio)
 
         self.convs = nn.ModuleList()
         for dilation in self.dilations:
