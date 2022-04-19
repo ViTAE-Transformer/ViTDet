@@ -17,10 +17,12 @@ The models are trained on 4 A100 machines with 2 images per gpu, which makes a b
 | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | 
 | ViT-Base | IN1K+MAE | TPU | Mask RCNN | 51.1 | 45.5 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-TPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQuegyG-Z3FH2LDP?e=9ij98g) |
 | ViT-Base | IN1K+MAE | GPU | Mask RCNN | 51.1 | 45.4 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgRA7Y9s2rA5NC4wn?e=QfpKJf) |
-| ViTAE-Base | IN1K+MAE | GPU | Mask RCNN | 51.6 | 45.8 | [config](configs/ViTDet/ViTDet-ViTAE-Base-100e.py) | [log](logs/ViTAE-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ--Ez4mzEnO-G5Y?e=ACfLxC) |
-| ViTAE-Small | IN1K+Sup | GPU | Mask RCNN | 45.6 | 40.1 | | [log](logs/ViTAE-S-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ7PorGY53K6gIGd?e=lw81U5) |
+| [ViTAE-Base](https://arxiv.org/abs/2202.10108) | IN1K+MAE | GPU | Mask RCNN | 51.6 | 45.8 | [config](configs/ViTDet/ViTDet-ViTAE-Base-100e.py) | [log](logs/ViTAE-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ--Ez4mzEnO-G5Y?e=ACfLxC) |
+| [ViTAE-Small](https://arxiv.org/abs/2202.10108) | IN1K+Sup | GPU | Mask RCNN | 45.6 | 40.1 | | [log](logs/ViTAE-S-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ7PorGY53K6gIGd?e=lw81U5) |
 
 ## Updates
+
+> [2022-04-18] Explore using small 1K supervised trained models (20M parameters) for ViTDet (**45.6 mAP**). The results with multi-stage structure is **46.0 mAP** for [Swin-T](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection) and **47.8 mAP** for [ViTAEv2-S](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Object-Detection) with Mask RCNN on COCO.
 
 > [2022-04-17] Release the pretrained weights and logs for ViT-B and ViTAE-B on MS COCO. The models are totally trained with PyTorch on GPU.
 
@@ -59,5 +61,23 @@ We acknowledge the excellent implementation from [mmdetection](https://github.co
   journal={ArXiv},
   year={2022},
   volume={abs/2203.16527}
+}
+```
+
+For ViTAE and ViTAEv2, please refer to:
+```
+@article{xu2021vitae,
+  title={Vitae: Vision transformer advanced by exploring intrinsic inductive bias},
+  author={Xu, Yufei and Zhang, Qiming and Zhang, Jing and Tao, Dacheng},
+  journal={Advances in Neural Information Processing Systems},
+  volume={34},
+  year={2021}
+}
+
+@article{zhang2022vitaev2,
+  title={ViTAEv2: Vision Transformer Advanced by Exploring Inductive Bias for Image Recognition and Beyond},
+  author={Zhang, Qiming and Xu, Yufei and Zhang, Jing and Tao, Dacheng},
+  journal={arXiv preprint arXiv:2202.10108},
+  year={2022}
 }
 ```

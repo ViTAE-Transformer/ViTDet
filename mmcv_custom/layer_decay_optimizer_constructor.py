@@ -11,6 +11,13 @@ def get_num_layer_for_vit(var_name, num_max_layer, layer_sep=None):
     elif var_name.startswith("backbone.blocks"):
         layer_id = int(var_name.split('.')[2])
         return layer_id + 1
+    elif var_name.startswith("backbone.layers"):
+        assert layer_sep is not None
+        split = var_name.split('.')
+        start_id = layer_sep[int(split[2])]
+        if split[3] == 'RC':
+            return start_id
+        return start_id + int(split[4]) + 1
     else:
         return num_max_layer - 1
 

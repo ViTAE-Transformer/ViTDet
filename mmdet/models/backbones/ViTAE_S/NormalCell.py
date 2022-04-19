@@ -36,14 +36,7 @@ class Attention(nn.Module):
         all_head_dim = head_dim * self.num_heads
         self.scale = qk_scale or head_dim ** -0.5
 
-        self.qkv = nn.Linear(dim, all_head_dim * 3, bias=False)
-
-        if qkv_bias:
-            self.q_bias = nn.Parameter(torch.zeros(all_head_dim))
-            self.v_bias = nn.Parameter(torch.zeros(all_head_dim))
-        else:
-            self.q_bias = None
-            self.v_bias = None
+        self.qkv = nn.Linear(dim, all_head_dim * 3, bias=qkv_bias)
 
         self.window_size = window_size
         q_size = window_size[0]
@@ -57,10 +50,7 @@ class Attention(nn.Module):
 
     def forward(self, x, H, W):
         B, N, C = x.shape
-        qkv_bias = None
-        if self.q_bias is not None:
-            qkv_bias = torch.cat((self.q_bias, torch.zeros_like(self.v_bias, requires_grad=False), self.v_bias))
-        qkv = F.linear(input=x, weight=self.qkv.weight, bias=qkv_bias)
+        qkv = self.qkv(x)
         qkv = qkv.reshape(B, N, 3, self.num_heads, -1).permute(2, 0, 3, 1, 4)
         q, k, v = qkv[0], qkv[1], qkv[2]   # make torchscript happy (cannot use tensor as tuple)
 
@@ -78,36 +68,42 @@ class Attention(nn.Module):
 
 class NormalCell(nn.Module):
     def __init__(self, dim, num_heads, mlp_ratio=4., qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
-                drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, class_token=False, group=1, kernel=3, mlp_hidden_dim=None, 
-                window=False, window_size=7, attn_head_dim=None):
+                drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, group=64, tokens_type='transformer', 
+                img_size=224, window=False, window_size=0):
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.class_token = class_token
+        self.img_size = img_size
+        self.window_size = window_size
+
+        self.tokens_type = tokens_type
+
+        assert tokens_type == 'transformer'
+
         if not window:
             self.attn = Attention(
-                dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, 
-                attn_drop=attn_drop, proj_drop=drop, window_size=window_size, attn_head_dim=attn_head_dim)
+                dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop, proj_drop=drop, window_size=window_size)
         else:
             self.attn = WindowAttention(
                 dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale,
-                attn_drop=attn_drop, proj_drop=drop, window_size=window_size, attn_head_dim=attn_head_dim)
+                attn_drop=attn_drop, proj_drop=drop, window_size=window_size)
 
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
 
         self.norm2 = norm_layer(dim)
-
-        mlp_hidden_dim = mlp_hidden_dim if mlp_hidden_dim is not None else int(dim * mlp_ratio)
-
-        PCM_dim = int(dim * mlp_ratio)
-
+        mlp_hidden_dim = int(dim * mlp_ratio)
         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
-        
+
         self.PCM = nn.Sequential(
-                            nn.Conv2d(dim, PCM_dim, kernel, 1, kernel//2, 1, group),
-                            nn.BatchNorm2d(PCM_dim),
-                            nn.SiLU(inplace=True),
-                            nn.Conv2d(PCM_dim, dim, kernel, 1, kernel//2, 1, group),
-                            )
+                nn.Conv2d(dim, mlp_hidden_dim, 3, 1, 1, 1, group),
+                nn.BatchNorm2d(mlp_hidden_dim),
+                nn.SiLU(inplace=True),
+                nn.Conv2d(mlp_hidden_dim, dim, 3, 1, 1, 1, group),
+                nn.BatchNorm2d(dim),
+                nn.SiLU(inplace=True),
+                nn.Conv2d(dim, dim, 3, 1, 1, 1, group),
+                nn.SiLU(inplace=True),
+                )
         self.H = 0
         self.W = 0
 
