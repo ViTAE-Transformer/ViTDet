@@ -35,7 +35,7 @@ model = dict(
         NC_group=[1, 1, 96], 
         RC_group=[1, 1, 1],
         mlp_ratio=3.,
-        window=[2, 5, 8, 13]
+        globalBlock=[2, 5, 8, 13]
         ),
     neck=dict(
         type='FPN',
