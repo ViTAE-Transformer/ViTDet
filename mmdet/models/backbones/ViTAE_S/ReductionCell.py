@@ -74,8 +74,6 @@ class ReductionCell(nn.Module):
         self.in_chans = in_chans
         self.downsample_ratios = downsample_ratios
         self.kernel_size = kernel_size
-        self.relative_pos = relative_pos
-        self.cpe = cpe
         PCMStride = []
         residual = downsample_ratios // 2
         for _ in range(3):
