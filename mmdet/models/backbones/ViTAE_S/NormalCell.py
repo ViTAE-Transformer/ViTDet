@@ -72,7 +72,6 @@ class NormalCell(nn.Module):
                 img_size=224, window=False, window_size=0):
         super().__init__()
         self.norm1 = norm_layer(dim)
-        self.class_token = class_token
         self.img_size = img_size
         self.window_size = window_size
 
