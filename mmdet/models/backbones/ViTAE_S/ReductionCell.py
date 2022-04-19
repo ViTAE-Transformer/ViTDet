@@ -86,7 +86,6 @@ class ReductionCell(nn.Module):
             PCMStride = [1, 1, 1]
             self.pool = nn.MaxPool2d(downsample_ratios, stride=downsample_ratios, padding=0)
             tokens_type = 'transformer'
-            self.outSize = self.outSize // downsample_ratios
             downsample_ratios = 1
 
         self.PCM = nn.Sequential(
@@ -101,8 +100,6 @@ class ReductionCell(nn.Module):
 
         self.PRM = PRM(img_size=img_size, kernel_size=kernel_size, downsample_ratio=downsample_ratios, dilations=self.dilations,
             in_chans=in_chans, embed_dim=embed_dims)
-
-        self.outSize = self.outSize // downsample_ratios
 
         in_chans = self.PRM.out_chans
 
