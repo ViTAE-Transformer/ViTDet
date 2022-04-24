@@ -3,6 +3,7 @@
 <p align="center">
   <a href="#Results">Results</a> |
   <a href="#Updates">Updates</a> |
+  <a href="#Usage">Usage</a> |
   <a href='#Todo'>Todo</a> |
   <a href="#Acknowledge">Acknowledge</a>
 </p>
@@ -29,6 +30,35 @@ The models are trained on 4 A100 machines with 2 images per gpu, which makes a b
 > [2022-04-16] Release the initial unofficial implementation of ViTDet with ViT-Base model! It obtains 51.1 mAP and 45.5 mAP on detection and segmentation, respectively. The weights and logs will be uploaded soon. 
 
 > Applications of ViTAE Transformer include: [image classification](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Image-Classification) | [object detection](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Object-Detection) | [semantic segmentation](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Semantic-Segmentation) | [animal pose segmentation](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Animal-Pose-Estimation) | [remote sensing](https://github.com/ViTAE-Transformer/ViTAE-Transformer-Remote-Sensing) | [matting](https://github.com/ViTAE-Transformer/ViTAE-Transformer-Matting)
+
+## Usage
+
+We use PyTorch 1.9.0 or NGC docker 21.06, and mmcv 1.3.9 for the experiments.
+```bash
+git clone https://github.com/open-mmlab/mmcv.git
+cd mmcv
+git checkout v1.3.9
+MMCV_WITH_OPS=1 pip install -e .
+cd ..
+git clone https://github.com/ViTAE-Transformer/ViTDet.git
+cd ViTDet
+pip install -v -e .
+```
+
+After install the two repos, install timm and einops, i.e.,
+```bash
+pip install timm==0.4.9 einops
+```
+
+Download the pretrained models from [MAE](https://github.com/facebookresearch/mae) or [ViTAE](https://github.com/ViTAE-Transformer/ViTAE-Transformer), and then conduct the experiments by
+
+```bash
+# for single machine
+bash tools/dist_train.sh <Config PATH> <NUM GPUs> --cfg-options model.pretrained=<Pretrained PATH>
+
+# for multiple machines
+python -m torch.distributed.launch --nnodes <Num Machines> --node_rank <Rank of Machine> --nproc_per_node <GPUs Per Machine> --master_addr <Master Addr> --master_port <Master Port> tools/train.py <Config PATH> --cfg-options model.pretrained=<Pretrained PATH>
+```
 
 ## Todo
 
